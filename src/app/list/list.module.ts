@@ -3,18 +3,18 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 
 import { SharedModule } from '../shared/shared.module';
-import { HomePage } from './home';
+import { ListPage } from './list';
 
 @NgModule({
   imports: [
     SharedModule,
-    IonicPageModule.forChild(HomePage)
+    IonicPageModule.forChild(ListPage)
   ],
   declarations: [
-    HomePage
+    ListPage
   ],
   entryComponents: [
-    HomePage
+    ListPage
   ]
 })
-export class HomePageModule { }
+export class ListPageModule { }

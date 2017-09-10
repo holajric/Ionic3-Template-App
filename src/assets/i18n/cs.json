@@ -1,3 +1,17 @@
 {
-  "OYSTER_INTRO" : "Svět je tvoje ústřice."
+  "LOGIN": "Přihlášení",
+  "LOGIN_BUTTON":"Přihlásit",
+  "LOGIN_FB_BUTTON": "Přihlásit přes Facebook",
+  "LOGIN_GOOGLE_BUTTON": "Přihlásit přes Google",
+  "REGISTER": "Registrace",
+  "REGISTER_BUTTON": "Registrovat",
+  "REGISTER_FB_BUTTON": "Registrovat přes Facebook",
+  "REGISTER_GOOGLE_BUTTON": "Registrovat přes Google",
+  "EMAIL": "E-mail",
+  "PASSWORD": "Heslo",
+  "ADD": "Přidat",
+  "DELETE_ALL": "Smazat vše",
+  "MARK_DONE": "Nesplněno",
+  "MARK_UNDONE": "Splněno",
+  "DELETE": "Smazat"
 }

@@ -75,13 +75,6 @@ export class AuthService {
   }
 
   /**
-   * sign in with github
-   */
-  signInWithGithub(): firebase.Promise<any> {
-    return this.afAuth.auth.signInWithPopup(new firebase.auth.GithubAuthProvider());
-  }
-
-  /**
    * sign in with email & password
    */
   signInWithEmail(credential: any): firebase.Promise<any> {

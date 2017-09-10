@@ -1,10 +1,20 @@
 import { NgModule } from '@angular/core';
 
-import { LoginPageModule } from './login/login.module'
+import { IonicPageModule } from 'ionic-angular';
+
+import { SharedModule } from '../shared/shared.module';
+import { AuthPage } from './auth';
 
 @NgModule({
-    imports: [ LoginPageModule ],
-    exports: [ LoginPageModule ],
-    declarations: [],
+  imports: [
+    SharedModule,
+    IonicPageModule.forChild(AuthPage),
+  ],
+  declarations: [
+    AuthPage,
+  ],
+  entryComponents: [
+    AuthPage
+  ]
 })
-export class AuthModule { }
+export class AuthPageModule {}

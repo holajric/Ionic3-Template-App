@@ -1,3 +1,17 @@
 {
-  "OYSTER_INTRO" : "The world is your oyster."
+  "LOGIN": "Login",
+  "LOGIN_BUTTON":"Log in",
+  "LOGIN_FB_BUTTON": "Log in with Facebook",
+  "LOGIN_GOOGLE_BUTTON": "Log in with Google",
+  "REGISTER": "Register",
+  "REGISTER_BUTTON": "Sign up",
+  "REGISTER_FB_BUTTON": "Sign up with Facebook",
+  "REGISTER_GOOGLE_BUTTON": "Sign up with Google",
+  "EMAIL": "E-mail",
+  "PASSWORD": "Password",
+  "ADD": "Add",
+  "DELETE_ALL": "Delete all",
+  "MARK_DONE": "Undone",
+  "MARK_UNDONE": "Done",
+  "DELETE": "Delete"
 }

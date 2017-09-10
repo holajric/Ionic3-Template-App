@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
-import { AuthService } from '../../core/auth.service';
+import { AuthService } from '../core/auth.service';
 
 @IonicPage()
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html',
+  selector: 'page-auth',
+  templateUrl: 'auth.html',
 })
-export class LoginPage {
+export class AuthPage {
+
+  public authAction: string = "login";
 
   constructor(
     public navCtrl: NavController, 
@@ -25,7 +27,7 @@ export class LoginPage {
       .then((res) => {
         this.updateProfile(res.user || res);
         loading.dismiss();
-        this.navCtrl.setRoot('HomePage');
+        this.navCtrl.setRoot('ListPage');
       }, (error) => {
         loading.dismiss();
         this.showMessage(error && error.message);
@@ -42,24 +44,25 @@ export class LoginPage {
       .then((res) => {
         this.updateProfile(res.user || res);
         loading.dismiss();
-        this.navCtrl.setRoot('HomePage');
+        this.navCtrl.setRoot('ListPage');
       }, (error) => {
         loading.dismiss();
         this.showMessage(error && error.message);
       });
   }
 
-  /**
-   * login with Github
-   */
-  loginWithGithub() {
+  authWithEmail(email:string, password: string) {
     let loading = this.loadingCtrl.create();
+    console.log(email, password);
     loading.present();
-    this.authService.signInWithGithub()
+    let authPromise = (this.authAction == "login") ? 
+      this.authService.signInWithEmail({email: email, password: password}) : 
+      this.authService.signUpWithEmail({email: email, password: password});
+    authPromise
       .then((res) => {
         this.updateProfile(res.user || res);
         loading.dismiss();
-        this.navCtrl.setRoot('HomePage');
+        this.navCtrl.setRoot('ListPage');
       }, (error) => {
         loading.dismiss();
         this.showMessage(error && error.message);

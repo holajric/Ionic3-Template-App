@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title> {{ authAction | uppercase | translate }}</ion-title>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="authAction" color="secondary">
+      <ion-segment-button value="login">
+        {{ 'LOGIN' | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="register">
+        {{ 'REGISTER' | translate }}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>{{ 'EMAIL' | translate }}</ion-label>
+      <ion-input #email type="text" value=""></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{ 'PASSWORD' | translate }}</ion-label>
+      <ion-input #password type="password"></ion-input>
+    </ion-item>
+  </ion-list>
+  <div class="position-bottom">
+    <button ion-button block [color]="authAction == 'login' ? 'primary' : 'secondary'" (click)="authWithEmail(email.value, password.value)">
+      {{ authAction + '_BUTTON' | uppercase | translate }}
+    </button>
+    <button ion-button block color="facebook" (click)="loginWithFacebook()">
+      {{ authAction + '_FB_BUTTON' | uppercase | translate }}
+    </button>
+    <button ion-button block color="google" (click)="loginWithGoogle()">
+      {{ authAction + '_GOOGLE_BUTTON' | uppercase | translate }}
+    </button>
+  </div>
+</ion-content>

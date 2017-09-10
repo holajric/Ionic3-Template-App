@@ -7,12 +7,9 @@ export const Config = {
     storageBucket: "angular4-workshop.appspot.com",
     messagingSenderId: "127243035046"
   },
-  google_web_client_id: "GOOGLE WEB CLIENT ID",
+  google_web_client_id: "904616137099-730tr4g3m6mhfldojejlren97nk3ckod.apps.googleusercontent.com",
   firebase_tables: {
     User: 'users',
-    Contacts: 'contacts',
-    ChatChannel: 'chat_channels',
-    ChatMember: 'chat_members',
-    ChatMessage: 'chat_messages',
+    Tasks: 'tasks'
   }
 };

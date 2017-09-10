@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ userProfile?.displayName?.split(" ")[0] }} ToDo</ion-title>
+    <ion-buttons end>
+      <button ion-button color="danger" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+		<ion-item class="text" *ngFor="let task of tasks | async">   
+      <ion-badge color="danger" item-start>{{task.priority}}</ion-badge>        
+      <h2>{{task.title}}</h2>
+      <p>{{task.deadline | date}}</p>
+      <button [color]="task.done ? 'secondary' : 'danger'" ion-button outline item-end (click)="task.done ? markUndone(task.$key) : markDone(task.$key)">{{ task.done ? "MARK_UNDONE" : "MARK_DONE" | translate }}</button>      
+      <button color="danger" ion-button outline item-end (click)="delete(task.$key)">{{ "DELETE" | translate }}</button>
+		</ion-item>
+	</ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button ion-button icon-right color="secondary" (click)="addTask()">
+        {{ "ADD" | translate }}
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-right color="danger" (click)="deleteAll()">
+        {{ "DELETE_ALL" | translate }}
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
