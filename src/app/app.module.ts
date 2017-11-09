@@ -8,14 +8,14 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 //Local plugins
 import { AppComponent } from './app.component';
-import { CoreModule } from './core/core.module';
+import { CoreModule } from '../core/core.module';
 
-import { Config } from './env.constants';
+import { Config } from '../enviroment/env.constants';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -30,7 +30,7 @@ export function HttpLoaderFactory(http: Http) {
     CoreModule,
     IonicModule.forRoot(AppComponent),
     AngularFireModule.initializeApp(Config.firebase),
-    AngularFireDatabaseModule, 
+    AngularFirestoreModule,
     AngularFireAuthModule,
     TranslateModule.forRoot({
             loader: {

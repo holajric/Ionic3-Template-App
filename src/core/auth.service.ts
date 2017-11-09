@@ -5,18 +5,20 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { Observable } from 'rxjs/Rx';
 
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database';
-import * as firebase from 'firebase/app';
+//import * as firebase from 'firebase/app';
+import * as firebase from 'firebase';
+import * as _ from 'lodash';
 
-import { Config } from '../env.constants';
-import { UserModel } from './user.model'
+import { Config } from '../enviroment/env.constants';
+import { UserModel } from '../models/user.model';
+import { DataService } from './data.service';
 
 @Injectable()
 export class AuthService {
 
   constructor(
     public afAuth: AngularFireAuth,
-    public db: AngularFireDatabase,
+    private db: DataService,
     public facebook: Facebook,
     public googleplus: GooglePlus,
     public platform: Platform
@@ -39,7 +41,7 @@ export class AuthService {
   /**
    * sign in with facebook
    */
-  signInWithFacebook(): firebase.Promise<any> {
+  signInWithFacebook(): Promise<any> {
     if (this.platform.is('cordova')) {
       return this.platform.ready().then(() => {
         return this.facebook.login(['email', 'public_profile']).then((res) => {
@@ -55,7 +57,7 @@ export class AuthService {
   /**
    * sign in with googleplus
    */
-  signInWithGoogle(): firebase.Promise<any> {
+  signInWithGoogle(): Promise<any> {
     if (this.platform.is('cordova')) {
       return this.platform.ready().then(() => {
         return this.googleplus.login({
@@ -66,7 +68,7 @@ export class AuthService {
           const googleCredential = firebase.auth.GoogleAuthProvider.credential(res.idToken);
           return this.afAuth.auth.signInWithCredential(googleCredential);
         }, (error) => {
-          return firebase.Promise.reject(error);
+          return Promise.reject(error);
         });
       });
     } else {
@@ -77,32 +79,34 @@ export class AuthService {
   /**
    * sign in with email & password
    */
-  signInWithEmail(credential: any): firebase.Promise<any> {
+  signInWithEmail(credential: any): Promise<any> {
     return this.afAuth.auth.signInWithEmailAndPassword(credential.email, credential.password);
   }
 
   /**
    * sign up with email & password
    */
-  signUpWithEmail(credential: any): firebase.Promise<void> {
+  signUpWithEmail(credential: any): Promise<void> {
     return this.afAuth.auth.createUserWithEmailAndPassword(credential.email, credential.password);
   }
 
   /**
    * sign out
    */
-  signOut(): firebase.Promise<any> {
+  signOut(): Promise<any> {
     return this.afAuth.auth.signOut();
   }
 
-  updateProfile(user): firebase.Promise<any> {
-    user.updatedAt = firebase.database['ServerValue']['TIMESTAMP'];
+  updateProfile(user: UserModel): Promise<any> {
+    user.updatedAt = firebase.firestore.FieldValue.serverTimestamp() as number;
 
     let providerData = user.providerData;
-    if (providerData && providerData.providerId === 'facebook.com')
+    if (providerData && providerData.photoURL)
+      user.photoURL = providerData.photoURL;
+    else if (providerData && providerData.providerId === 'facebook.com')
       user.photoURL = `https://graph.facebook.com/${providerData.uid}/picture?type=square`;
-      
-    return this.db.object(Config.firebase_tables.User + '/' + user.uid).update(user);
+    user.providerData = _.toPlainObject(_.cloneDeep(providerData));
+    return this.db.upsert<UserModel>('users/' + user.uid, user);
   }
 
   /**
@@ -110,12 +114,12 @@ export class AuthService {
    */
   getFullProfile(uid?: string): Observable<UserModel> {
     if (uid)
-      return this.db.object(Config.firebase_tables.User + '/' + uid);
+      return this.db.doc$<UserModel>('users/' + uid);
     
     return Observable.create((observer) => {
       this.getAuth().subscribe((user: firebase.User) => {
         if (user !== null)
-          this.db.object(Config.firebase_tables.User + '/' + user.uid).subscribe((res) => observer.next(res));
+          this.db.doc$<UserModel>('users/' + user.uid).subscribe((res) => observer.next(res));
       });
     });
   }

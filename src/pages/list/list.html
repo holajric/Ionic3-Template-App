@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ userProfile?.displayName?.split(" ")[0] }} ToDo</ion-title>
+    <ion-buttons end>
+      <button ion-button color="danger" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let task of tasks; let i = index">
+      {{i}} {{task.title}}
+      <!--button ion-button (click)="delete(i)">
+        <ion-icon name="close"></ion-icon>
+      </button-->
+    </ion-item>
+  </ion-list>
+
+  <input type="text" [(ngModel)]="content">
+  <button ion-button (click)="addTask(content)">Add</button>
+</ion-content>

@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TranslateService } from '@ngx-translate/core'
 
-import { AuthService } from './core/auth.service';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   templateUrl: 'app.html'
